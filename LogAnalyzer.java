@@ -28,6 +28,23 @@ public class LogAnalyzer
         // Create the reader to obtain the data.
         reader = new LogfileReader(fileName);
     }
+    
+    /**
+     * The main program generates, analyzes, and reports on web access logs. 
+     * It creates a log file with simulated web access entries, analyzes the hourly distribution 
+     * of web accesses, prints the hourly access counts, and displays the total number of accesses. 
+     * @param args The command-line arguments for the program. 
+     */
+    public static void main(String[] args) 
+    {
+        LogfileCreator creator = new LogfileCreator();
+        creator.createFile("entries.txt", 8);
+
+        LogAnalyzer analyzer = new LogAnalyzer("entries.txt");
+        analyzer.analyzeHourlyData();
+        analyzer.printHourlyCounts(); 
+        System.out.println(analyzer.numberOfAccesses());
+    }
 
     /**
      * Analyze the hourly access data from the log file.
@@ -63,7 +80,10 @@ public class LogAnalyzer
     }
     
     /**
-     * Return the number of accesses recorded in the log file.
+     * Exercise 7.14 - Add the numberOfAccesses method to your LogAnalyzer. 
+     * you can test it by opening the log file in Notepad++ and seeing the number of lines 
+     * in the file
+     * Return total The number of accesses recorded in the log file.
      */
     public int numberOfAccesses()
     {
