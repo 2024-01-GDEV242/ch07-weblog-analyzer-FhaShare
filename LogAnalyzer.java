@@ -8,12 +8,14 @@ public class LogAnalyzer
 {
     // Where to calculate the hourly access counts.
     private int[] hourCounts;
-    // Where to calculate the weekly access counts 
+    // Where to calculate the daily access counts 
     private int[] dailyCounts;
     // Where to calculate the weekly access counts
     private int[] weeklyCounts;
-    // Where to calculate the access outcome counts.
-    private int[] accessOutcomeCounts;
+    // Where to calculate the monthly access counts
+    private int[] monthlyCounts;
+    // Where to calculate the yearly access counts
+    private int[] yearlyCounts;
     // Use a LogfileReader to access the data.
     private LogfileReader reader;
 
@@ -37,9 +39,12 @@ public class LogAnalyzer
         // Create the array object to hold the weekly
         // access distribution.
         weeklyCounts = new int[7];
-        // Create the array object to hold the hourly
+        // Create the array object to hold the monthly
         // access counts.
-        accessOutcomeCounts = new int[3];
+        monthlyCounts = new int[12];
+        // Create the array object to hold the yearly
+        // access counts.
+        yearlyCounts = new int[20];
         // Create the reader to obtain the data.
         reader = new LogfileReader(fileName);
     }
@@ -103,11 +108,11 @@ public class LogAnalyzer
     public int numberOfAccesses()
     {
         int total = 0;
-        // Add the value in each element of hourCounts to
-        // total.
+        
         for(int i = 0; i < hourCounts.length; i++) {
             total += hourCounts[i];
         }
+        
         return total;
     }
     
@@ -149,19 +154,40 @@ public class LogAnalyzer
     /**
      * Exercise 7.18 Add a method to LogAnalyzer that finds which two-hour period is the busiest.
      * Find the busiest two hours.
-     * @return busiestTwoHours The first of the busiest two hours.
+     * @return highestHourStart The busiest hour pair
      */
-    public int busiestTwoHours() {
-        int maxCount = 0;
-        int firstOfBusiestHourPair = 0;
-        for(int i = 0; i < hourCounts.length/2; i++) {
-            int hourPair = hourCounts[i * 2] + hourCounts[i * 2 + 1];
-            if (hourPair > maxCount) {
-                firstOfBusiestHourPair = i;
+    public int busiestTwoHour()
+    {
+        //Two variables to compare highest value to
+        int highestCount = hourCounts[0] + hourCounts[1];
+        int highestHourStart = 0;
+        int highestHourEnd = 0;
+        int checkCount;
+        
+        //For loop to check every index
+        for (int index = 0; index < hourCounts.length; index++) {
+            if (index == 23) {
+                checkCount = hourCounts[index] + hourCounts[0];
+            } else {
+                //current index value is added with its next index to compare its score
+                checkCount = hourCounts[index] + hourCounts[index + 1];
             }
+                //Compares the value of the hour to the newest highest count
+                if (checkCount > highestCount) {
+                    //If the new highest count beats the old one, replace all info with its.
+                    highestCount = checkCount;
+                    highestHourStart = index;
+                    highestHourEnd = index + 1;
+                }
         }
-        return firstOfBusiestHourPair;
+        
+        //After the array has been checked, return the highest hour
+        System.out.println("The highest two hour period: " + highestHourStart 
+                            + " - " + highestHourEnd + " with " 
+                            + highestCount + " visitors.");
+        return highestHourStart;
     }
+
     
     /**
      * Analyze the daily access data from the log file.
@@ -172,6 +198,17 @@ public class LogAnalyzer
             LogEntry entry = reader.next();
             int day = entry.getDay();
             dailyCounts[day]++;
+        }
+    }
+    
+    /**
+     * Analyze the monthly access data from the log file.
+     */
+    public void analyzeMonthlyData() {
+        while (reader.hasNext()) {
+            LogEntry entry = reader.next();
+            int month = entry.getMonth() ;
+            monthlyCounts[month-1]++;
         }
     }
     
@@ -235,25 +272,30 @@ public class LogAnalyzer
     /**
      * Calculates and returns the total number of web accesses for each month, 
      * assuming each month has exactly 28 days. 
-     * @return An array of integers where each element 
+     * @return monthlyAccesses An array of integers where each element 
      * represents the total number of web accesses for a month. 
      */
     public int[] totalAccessesPerMonth() 
     {
-        int[] monthlyAccesses = new int[12]; 
-        int daysInMonth = 28; 
-    
+        int[] monthlyAccesses = new int[12]; // 12 months in a year
+        int daysInMonth = 28; // Assuming each month has 28 days
+
+        for (int i = 0; i < monthlyAccesses.length; i++) {
+            monthlyAccesses[i] = 0;
+        }
+
+        // Accumulate total accesses for each "28-day month"
         for (int month = 0; month < 12; month++) {
-            int monthTotal = 0;
             for (int day = 0; day < daysInMonth; day++) {
                 int dayOfYear = month * daysInMonth + day;
-                if (dayOfYear < dailyCounts.length) { 
+                // Ensure we don't access an index beyond the available dailyCounts.
+                if (dayOfYear < dailyCounts.length) {
+                    monthlyAccesses[month] += dailyCounts[dayOfYear];
                 }
             }
-            monthlyAccesses[month] = monthTotal;
         }
-    
+
         return monthlyAccesses;
-    }
     
+    }
 }
