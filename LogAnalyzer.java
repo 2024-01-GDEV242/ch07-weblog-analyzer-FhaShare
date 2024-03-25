@@ -130,4 +130,21 @@ public class LogAnalyzer
             }
         return quietestHour;
     }
+    
+    /**
+     * Exercise 7.18 Add a method to LogAnalyzer that finds which two-hour period is the busiest.
+     * Find the busiest two hours.
+     * @return busiestTwoHours The first of the busiest two hours.
+     */
+    public int busiestTwoHours() {
+        int maxCount = 0;
+        int firstOfBusiestHourPair = 0;
+        for(int i = 0; i < hourCounts.length/2; i++) {
+            int hourPair = hourCounts[i * 2] + hourCounts[i * 2 + 1];
+            if (hourPair > maxCount) {
+                firstOfBusiestHourPair = i;
+            }
+        }
+        return firstOfBusiestHourPair;
+    }
 }
