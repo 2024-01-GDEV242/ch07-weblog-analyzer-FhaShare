@@ -8,6 +8,10 @@ public class LogAnalyzer
 {
     // Where to calculate the hourly access counts.
     private int[] hourCounts;
+    // Where to calculate the weekly access counts 
+    private int[] dailyCounts;
+    // Where to calculate the weekly access counts
+    private int[] weeklyCounts;
     // Use a LogfileReader to access the data.
     private LogfileReader reader;
 
@@ -25,6 +29,12 @@ public class LogAnalyzer
         // Create the array object to hold the hourly
         // access counts.
         hourCounts = new int[24];
+        // Create the array object to hold the daily
+        // access counts.
+        dailyCounts = new int[366];
+        // Create the array object to hold the weekly
+        // access distribution.
+        weeklyCounts = new int[7];
         // Create the reader to obtain the data.
         reader = new LogfileReader(fileName);
     }
@@ -146,5 +156,34 @@ public class LogAnalyzer
             }
         }
         return firstOfBusiestHourPair;
+    }
+    
+    /**
+     * Analyze the daily access data from the log file.
+     */
+    public void analyzeDailyData()
+    { 
+        while(reader.hasNext()) {
+            LogEntry entry = reader.next();
+            int day = entry.getDay();
+            dailyCounts[day]++;
+        }
+    }
+    
+    /**
+     * Analyze the 7-day access patterns(starting from the 1st of January).
+     * @return weeklyCounts The array has 7 elements, each for a day of the week. 
+     */
+    public int[] analyzeWeeklyPatterns()
+    {
+        for(int i = 0; i < 52; i++){ // Looping through each week
+            for(int j = 0; j < 7; j++) { //Looping through each day
+                weeklyCounts[j] += dailyCounts[i * 7 + j];
+            }
+        }
+
+        weeklyCounts[0] += dailyCounts[364];
+        weeklyCounts[1] += dailyCounts[365];
+        return weeklyCounts;
     }
 }
