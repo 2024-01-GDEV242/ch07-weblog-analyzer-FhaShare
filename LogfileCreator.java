@@ -4,8 +4,8 @@ import java.util.*;
 /**
  * A class for creating log files of random data.
  * 
- * @author David J. Barnes and Michael Kölling
- * @version    2016.02.29
+ * @author Fhaungfha Suvannakajorn
+ * @version    2024.03.25
  */
 public class LogfileCreator
 {
@@ -20,7 +20,9 @@ public class LogfileCreator
     }
     
     /**
-     * Exercise 7.12 - Use the LogfileCreator class to create your own file of random log entries, and analyze the data.
+     * Exercise 7.12 - Use the LogfileCreator class to create your own file of random log entries, 
+     * and analyze the data.
+     * 
      * The main method generates a log file with simulated web access data, 
      * analyzes the data to compute hourly access counts, and prints the results to the console. 
      * It uses LogfileCreator to generate "entries.txt" and LogAnalyzer to analyze 
