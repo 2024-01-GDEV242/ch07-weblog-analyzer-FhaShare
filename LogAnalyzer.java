@@ -12,6 +12,8 @@ public class LogAnalyzer
     private int[] dailyCounts;
     // Where to calculate the weekly access counts
     private int[] weeklyCounts;
+    // Where to calculate the access outcome counts.
+    private int[] accessOutcomeCounts;
     // Use a LogfileReader to access the data.
     private LogfileReader reader;
 
@@ -35,6 +37,9 @@ public class LogAnalyzer
         // Create the array object to hold the weekly
         // access distribution.
         weeklyCounts = new int[7];
+        // Create the array object to hold the hourly
+        // access counts.
+        accessOutcomeCounts = new int[3];
         // Create the reader to obtain the data.
         reader = new LogfileReader(fileName);
     }
@@ -191,14 +196,22 @@ public class LogAnalyzer
      * Analyze the quietest day in a 7-day cycle.
      * @return quietestDay The quietest day.
      */
-    public int quietestDay() {
-        int minCount = numberOfAccesses();
+    public int quietestDay() 
+    {
+        if (weeklyCounts.length == 0) {
+        return -1;
+        }
+
+        int minCount = weeklyCounts[0];
         int quietestDay = 0;
-        for(int i = 0; i < weeklyCounts.length; i++)
-            if(hourCounts[i] < minCount) {
+
+        for (int i = 1; i < weeklyCounts.length; i++) {
+            if (weeklyCounts[i] < minCount) {
                 quietestDay = i;
                 minCount = weeklyCounts[i];
             }
+        }
+        
         return quietestDay;
     }
     
@@ -209,9 +222,36 @@ public class LogAnalyzer
     public int busiestDay() {
         int maxCount = 0;
         int busiestDay = 0;
-        for(int i = 0; i < weeklyCounts.length; i++)
-            if(weeklyCounts[i] > maxCount)
+        for(int i = 0; i < weeklyCounts.length; i++){
+            if(weeklyCounts[i] > maxCount){
                 busiestDay = i;
+            }
+        }
         return busiestDay;
     }
+    
+    /**
+     * Calculates and returns the total number of web accesses for each month, 
+     * assuming each month has exactly 28 days. 
+     * @return An array of integers where each element 
+     * represents the total number of web accesses for a month. 
+     */
+    public int[] totalAccessesPerMonth() 
+    {
+        int[] monthlyAccesses = new int[12]; 
+        int daysInMonth = 28; 
+    
+        for (int month = 0; month < 12; month++) {
+            int monthTotal = 0;
+            for (int day = 0; day < daysInMonth; day++) {
+                int dayOfYear = month * daysInMonth + day;
+                if (dayOfYear < dailyCounts.length) { 
+                }
+            }
+            monthlyAccesses[month] = monthTotal;
+        }
+    
+        return monthlyAccesses;
+    }
+    
 }
