@@ -234,7 +234,7 @@ public class LogAnalyzer
     public int quietestDay() 
     {
         if (weeklyCounts.length == 0) {
-        return -1;
+            return -1;
         }
 
         int minCount = weeklyCounts[0];
@@ -280,12 +280,12 @@ public class LogAnalyzer
     
     /**
      * Analyze the quietest month in a 12-months cycle.
-     * @return quietestMonth The quietest Month.
+     * @return quietestMonth The quietest month.
      */
     public int quietestMonth() 
     {
         if (monthlyCounts.length == 0) {
-        return -1;
+            return -1;
         }
 
         int minCount = monthlyCounts[0];
@@ -299,5 +299,22 @@ public class LogAnalyzer
         }
         
         return quietestMonth;
+    }
+    
+    /**
+     * Analyze the busiest month in a 12-months cycle.
+     * @return busiestMonth The busiest month.
+     */
+    public int busiestMonth() {
+        int maxCount = 0;
+        int busiestMonth = 0;
+        for(int i = 0; i < monthlyCounts.length; i++){
+            if(monthlyCounts[i] > maxCount){
+                busiestMonth = i;
+                maxCount = monthlyCounts[i];
+            }
+        }
+        
+        return busiestMonth;
     }
 }
