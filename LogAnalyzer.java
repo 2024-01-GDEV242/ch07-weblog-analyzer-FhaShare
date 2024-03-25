@@ -317,4 +317,17 @@ public class LogAnalyzer
         
         return busiestMonth;
     }
+    
+    /**
+     * Calculate the number of average monthly accesses recorded in the log file.
+     */
+    public void averageAccessesPerMonth()
+    {
+        for (int index = 1; index < monthlyCounts.length; index++) {
+            //There are 7 years, from 2018-2024.
+            int monthlyAverage = monthlyCounts[index] / 7;
+
+            System.out.println("Month " + index + ": " + monthlyAverage + " times");
+        }
+    }
 }
