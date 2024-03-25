@@ -186,4 +186,19 @@ public class LogAnalyzer
         weeklyCounts[1] += dailyCounts[365];
         return weeklyCounts;
     }
+    
+    /**
+     * Analyze the quietest day in a 7-day cycle.
+     * @return quietestDay The quietest day.
+     */
+    public int quietestDay() {
+        int minCount = numberOfAccesses();
+        int quietestDay = 0;
+        for(int i = 0; i < weeklyCounts.length; i++)
+            if(hourCounts[i] < minCount) {
+                quietestDay = i;
+                minCount = weeklyCounts[i];
+            }
+        return quietestDay;
+    }
 }
