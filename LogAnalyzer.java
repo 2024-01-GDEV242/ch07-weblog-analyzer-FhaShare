@@ -99,7 +99,7 @@ public class LogAnalyzer
     /**
      * Exercise 7.15 Add a method busiestHour to LogAnalyzer that returns the busiest hour.
      * Find the busiest hour.
-     * @return The busiest hour.
+     * @return busiestHour The busiest hour.
      */
     public int busiestHour() 
     {
@@ -111,5 +111,23 @@ public class LogAnalyzer
                 maxCount = hourCounts[i];
             }
         return busiestHour;
+    }
+    
+    /**
+     * Exercise 7.16 Add a method quietestHour to LogAnalyzer that 
+     * returns the number of the least 􏰁us􏰂 hour􏰃 
+     * Find the quietest hour.
+     * @return quietestHour The quietest hour.
+     */
+    public int quietestHour() 
+    {
+        int minCount = numberOfAccesses();
+        int quietestHour = 0;
+        for(int i = 0; i < hourCounts.length; i++)
+            if(hourCounts[i] < minCount) {
+                quietestHour = i;
+                minCount = hourCounts[i];
+            }
+        return quietestHour;
     }
 }
