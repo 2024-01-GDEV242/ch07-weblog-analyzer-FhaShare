@@ -163,22 +163,20 @@ public class LogAnalyzer
         int highestHourStart = 0;
         int highestHourEnd = 0;
         int checkCount;
-        
-        //For loop to check every index
+
         for (int index = 0; index < hourCounts.length; index++) {
             if (index == 23) {
                 checkCount = hourCounts[index] + hourCounts[0];
             } else {
-                //current index value is added with its next index to compare its score
                 checkCount = hourCounts[index] + hourCounts[index + 1];
             }
-                //Compares the value of the hour to the newest highest count
-                if (checkCount > highestCount) {
-                    //If the new highest count beats the old one, replace all info with its.
-                    highestCount = checkCount;
-                    highestHourStart = index;
-                    highestHourEnd = index + 1;
-                }
+            
+            //Compares the value of the hour to the newest highest count
+            if (checkCount > highestCount) {
+                highestCount = checkCount;
+                highestHourStart = index;
+                highestHourEnd = index + 1;
+            }
         }
         
         //After the array has been checked, return the highest hour
@@ -272,30 +270,11 @@ public class LogAnalyzer
     /**
      * Calculates and returns the total number of web accesses for each month, 
      * assuming each month has exactly 28 days. 
-     * @return monthlyAccesses An array of integers where each element 
-     * represents the total number of web accesses for a month. 
      */
-    public int[] totalAccessesPerMonth() 
+    public void totalAccessesPerMonth() 
     {
-        int[] monthlyAccesses = new int[12]; // 12 months in a year
-        int daysInMonth = 28; // Assuming each month has 28 days
-
-        for (int i = 0; i < monthlyAccesses.length; i++) {
-            monthlyAccesses[i] = 0;
+        for (int index = 1; index < monthlyCounts.length; index++) {
+            System.out.println("Month " + index + ": " + monthlyCounts[index] + " times");
         }
-
-        // Accumulate total accesses for each "28-day month"
-        for (int month = 0; month < 12; month++) {
-            for (int day = 0; day < daysInMonth; day++) {
-                int dayOfYear = month * daysInMonth + day;
-                // Ensure we don't access an index beyond the available dailyCounts.
-                if (dayOfYear < dailyCounts.length) {
-                    monthlyAccesses[month] += dailyCounts[dayOfYear];
-                }
-            }
-        }
-
-        return monthlyAccesses;
-    
     }
 }
