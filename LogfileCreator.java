@@ -20,6 +20,23 @@ public class LogfileCreator
     }
     
     /**
+     * Exercise 7.12 - Use the LogfileCreator class to create your own file of random log entries, and analyze the data.
+     * The main method generates a log file with simulated web access data, 
+     * analyzes the data to compute hourly access counts, and prints the results to the console. 
+     * It uses LogfileCreator to generate "entries.txt" and LogAnalyzer to analyze 
+     * and print the results.
+     * @param args The command-line arguments for the program. 
+     */
+    public static void main(String[] args) {
+        LogfileCreator creator = new LogfileCreator();
+        creator.createFile("entries.txt", 255);
+
+        LogAnalyzer analyzer = new LogAnalyzer("entries.txt");
+        analyzer.analyzeHourlyData();
+        analyzer.printHourlyCounts();
+    }
+    
+    /**
      * Create a file of random log entries.
      * @param filename The file to write.
      * @param numEntries How many entries.
