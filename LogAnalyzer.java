@@ -225,8 +225,10 @@ public class LogAnalyzer
         for(int i = 0; i < weeklyCounts.length; i++){
             if(weeklyCounts[i] > maxCount){
                 busiestDay = i;
+                maxCount = weeklyCounts[i];
             }
         }
+        
         return busiestDay;
     }
     
