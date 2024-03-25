@@ -95,4 +95,21 @@ public class LogAnalyzer
         }
         return total;
     }
+    
+    /**
+     * Exercise 7.15 Add a method busiestHour to LogAnalyzer that returns the busiest hour.
+     * Find the busiest hour.
+     * @return The busiest hour.
+     */
+    public int busiestHour() 
+    {
+        int maxCount = 0;
+        int busiestHour = 0;
+        for(int i = 0; i < hourCounts.length; i++)
+            if(hourCounts[i] > maxCount) {
+                busiestHour = i; 
+                maxCount = hourCounts[i];
+            }
+        return busiestHour;
+    }
 }
