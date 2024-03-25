@@ -125,7 +125,7 @@ public class LogAnalyzer
     
     /**
      * Exercise 7.16 Add a method quietestHour to LogAnalyzer that 
-     * returns the number of the least 􏰁us􏰂 hour􏰃 
+     * returns the number of the least?busy hour􏰃 
      * Find the quietest hour.
      * @return quietestHour The quietest hour.
      */
@@ -176,8 +176,8 @@ public class LogAnalyzer
      */
     public int[] analyzeWeeklyPatterns()
     {
-        for(int i = 0; i < 52; i++){ // Looping through each week
-            for(int j = 0; j < 7; j++) { //Looping through each day
+        for(int i = 0; i < 52; i++){ 
+            for(int j = 0; j < 7; j++) {
                 weeklyCounts[j] += dailyCounts[i * 7 + j];
             }
         }
@@ -200,5 +200,18 @@ public class LogAnalyzer
                 minCount = weeklyCounts[i];
             }
         return quietestDay;
+    }
+    
+    /**
+     * Analyze the busiest day in a 7-day cycle.
+     * @return busiestDay The busiest day.
+     */
+    public int busiestDay() {
+        int maxCount = 0;
+        int busiestDay = 0;
+        for(int i = 0; i < weeklyCounts.length; i++)
+            if(weeklyCounts[i] > maxCount)
+                busiestDay = i;
+        return busiestDay;
     }
 }
