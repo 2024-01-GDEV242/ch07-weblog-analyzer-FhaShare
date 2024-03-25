@@ -277,4 +277,27 @@ public class LogAnalyzer
             System.out.println("Month " + index + ": " + monthlyCounts[index] + " times");
         }
     }
+    
+    /**
+     * Analyze the quietest month in a 12-months cycle.
+     * @return quietestMonth The quietest Month.
+     */
+    public int quietestMonth() 
+    {
+        if (monthlyCounts.length == 0) {
+        return -1;
+        }
+
+        int minCount = monthlyCounts[0];
+        int quietestMonth = 0;
+
+        for (int i = 1; i < weeklyCounts.length; i++) {
+            if (monthlyCounts[i] < minCount) {
+                quietestMonth = i;
+                minCount = monthlyCounts[i];
+            }
+        }
+        
+        return quietestMonth;
+    }
 }
