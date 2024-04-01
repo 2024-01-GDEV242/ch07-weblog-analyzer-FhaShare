@@ -4,8 +4,8 @@ import java.util.*;
 /**
  * A class for creating log files of random data.
  * 
- * @author David J. Barnes and Michael Kölling
- * @version    2016.02.29
+ * @author Fhaungfha Suvannakajorn
+ * @version    2024.03.25
  */
 public class LogfileCreator
 {
@@ -17,6 +17,25 @@ public class LogfileCreator
     public LogfileCreator()
     {
         rand = new Random();
+    }
+    
+    /**
+     * Exercise 7.12 - Use the LogfileCreator class to create your own file of random log entries, 
+     * and analyze the data.
+     * 
+     * The main method generates a log file with simulated web access data, 
+     * analyzes the data to compute hourly access counts, and prints the results to the console. 
+     * It uses LogfileCreator to generate "entries.txt" and LogAnalyzer to analyze 
+     * and print the results.
+     * @param args The command-line arguments for the program. 
+     */
+    public static void main(String[] args) {
+        LogfileCreator creator = new LogfileCreator();
+        creator.createFile("entries.txt", 255);
+
+        LogAnalyzer analyzer = new LogAnalyzer("entries.txt");
+        analyzer.analyzeHourlyData();
+        analyzer.printHourlyCounts();
     }
     
     /**
@@ -57,7 +76,7 @@ public class LogfileCreator
      */
     public LogEntry createEntry()
     {
-        int year = 2016;
+        int year = 2018 + rand.nextInt(2025-2018);
         int month = 1 + rand.nextInt(12);
         // Avoid the complexities of days-per-month.
         int day = 1 + rand.nextInt(28);
@@ -65,5 +84,4 @@ public class LogfileCreator
         int minute = rand.nextInt(60);
         return new LogEntry(year, month, day, hour, minute);
     }
-
 }
